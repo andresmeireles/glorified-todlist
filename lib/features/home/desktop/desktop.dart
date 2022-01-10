@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/api/database/sql/sql.dart' as sql;
+import '../home.dart';
+
 class Desktop extends StatelessWidget {
   const Desktop({Key? key}) : super(key: key);
 
@@ -8,9 +11,21 @@ class Desktop extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const Text('coluna 1'),
-        const Text('coluna 2'),
-        const Text('coluna 2'),
+        // Text('coluna 1'),
+        Flexible(
+          child: Todos(
+            todos: [
+              sql.Todo(
+                createDate: DateTime.now(),
+                finishedDate: DateTime.now(),
+                isFinished: false,
+                task: 'Qalquer coisa',
+                uuid: '22aa',
+              ),
+            ],
+          ),
+        ),
+        // Text('coluna 2'),
       ],
     );
   }
