@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class AppScaffold extends StatelessWidget {
@@ -16,8 +18,6 @@ class AppScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size.width;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -34,35 +34,31 @@ class AppScaffold extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => print('chooch'),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
-      body: _handleWidgetType(screenSize),
+      body: _handleWidgetType(),
     );
   }
 
-  Sizes _handleScreenType(double screenSize) {
-    if (screenSize > 800) {
-      return Sizes.desktop;
-    }
+  // Sizes _handleScreenType(double screenSize) {
+  //   if (screenSize > 800) {
+  //     return Sizes.desktop;
+  //   }
 
-    return Sizes.mobile;
-  }
+  //   return Sizes.mobile;
+  // }
 
-  Widget _handleWidgetType(double screenSize) {
+  Widget _handleWidgetType() {
     final renderBody = body ?? Container();
     final renderMobileBody = mobileBody ?? renderBody;
     final renderDesktopBody = desktopBody ?? renderMobileBody;
-    final screen = _handleScreenType(screenSize);
 
-    switch (screen) {
-      case Sizes.mobile:
-        return renderMobileBody;
-      case Sizes.desktop:
-        return renderDesktopBody;
-      default:
-        return renderBody;
+    if (Platform.isAndroid || Platform.isIOS) {
+      return renderMobileBody;
     }
+    if (Platform.isWindows || Platform.isLinux) {
+      return renderDesktopBody;
+    }
+    return renderBody;
   }
 }
-
-enum Sizes { mobile, desktop }

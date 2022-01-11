@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/api/database/sql/sql.dart';
+import '../../../core/widget.dart';
 
 class Todos extends StatelessWidget {
   final List<Todo> todos;
@@ -13,11 +14,7 @@ class Todos extends StatelessWidget {
       itemBuilder: (context, index) {
         final todo = todos[index];
 
-        return ListTile(
-          leading: Text(todo.isFinished ? 'finalizado' : 'em aberto'),
-          title: Text(todo.task),
-          subtitle: Text('criado em ${todo.createDate}'),
-        );
+        return TodoCheckbox(todo: todo);
       },
       itemCount: todos.length,
     );
